@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os"
 
@@ -35,6 +36,21 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	type User struct {
+		Name	string
+		Lastname	string
+		Age		int 
+	} 
+
+	new_user := User{Name: "mark", Lastname: "schmidt", Age: 25}
+
+	coll := client.Database("go-mongo").Collection("users")
+	result, err := coll.InsertOne(context.TODO(), new_user)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Document inserted with ID: %s\n", result.InsertedID)
 	
 	app.Use(cors.New())
 

@@ -1,41 +1,55 @@
+import React, { useState } from "react";
 import "./styles.css";
 
-const submitHandler = async (data: {
-  name: string;
-  lastname: string;
-  age: number;
-}) => {
-  const res = await fetch("/users", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: JSON.stringify(data),
-  });
-
-  return res.json();
-};
-
-const submitData = e => {
-  submitHandler(e.target.value);
-};
-
 function Form() {
+  const [nameInput, setNameInput] = useState("");
+  const [lastNameInput, setLastNameInput] = useState("");
+  const [ageInput, setAgeInput] = useState(1);
+
+  const handleName = (e: React.FormEvent<HTMLInputElement>) => {
+    setNameInput(e.currentTarget.value);
+  };
+
+  const handleLastName = (e: React.FormEvent<HTMLInputElement>) => {
+    setLastNameInput(e.currentTarget.value);
+  };
+
+  const handleAge = (e: React.FormEvent<HTMLInputElement>) => {
+    setAgeInput(Number(e.currentTarget.value));
+  };
+
+  const submitHandler = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const res = await fetch("/users/:id", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: nameInput,
+        lastName: lastNameInput,
+        age: ageInput,
+      }),
+    });
+
+    if (!res.ok) throw new Error("Hey, the request failed. What did you do?");
+
+    return res.json();
+  };
+
   return (
-    <form method="POST">
+    <form method="POST" onSubmit={submitHandler}>
       <label>Name:</label>
-      <input name="name" type="text" />
+      <input value={nameInput} onChange={handleName} name="name" type="text" />
 
       <label>Lastname:</label>
-      <input name="lastname" type="text" />
+      <input onChange={handleLastName} name="lastname" type="text" />
 
       <label>Age:</label>
-      <input name="age" type="number" />
+      <input onChange={handleAge} name="age" type="number" />
 
-      <button type="submit" onSubmit={submitData}>
-        Send
-      </button>
+      <button type="submit">Send</button>
     </form>
   );
 }

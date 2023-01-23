@@ -32,25 +32,18 @@ func main() {
 	}
 
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))
-
 	if err != nil {
 		panic(err)
 	}
+	
 
 	type User struct {
-		Name	string
-		Lastname	string
-		Age		int 
+		Name			string		`json:"name" form:"name"`
+		Lastname	string		`json:"lastName" form:"lastName"`
+		Age				int 			`json:"age" form:"age"`
 	} 
 
-	new_user := User{Name: "mark", Lastname: "schmidt", Age: 25}
-
 	coll := client.Database("go-mongo").Collection("users")
-	result, err := coll.InsertOne(context.TODO(), new_user)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("Document inserted with ID: %s\n", result.InsertedID)
 	
 	app.Use(cors.New())
 
@@ -59,6 +52,21 @@ func main() {
 	app.Get("/users", func(c *fiber.Ctx) error {
 		return c.JSON(&fiber.Map{
 			"data": "Here is the data requested",
+		})
+	})
+
+	app.Post("/users/:id", func(c *fiber.Ctx) error {
+		newUser := new(User)
+		c.BodyParser(newUser)
+
+		result, err := coll.InsertOne(context.TODO(), newUser)
+		if err != nil {
+			panic(err)
+		}
+
+		fmt.Println("user created")
+		return c.JSON(&fiber.Map{
+			"user": result,
 		})
 	})
 

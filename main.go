@@ -9,6 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -50,9 +51,17 @@ func main() {
 	app.Static("/", "./client/dist")
 
 	app.Get("/users", func(c *fiber.Ctx) error {
-		return c.JSON(&fiber.Map{
-			"data": "Here is the data requested",
-		})
+		cursor, err := coll.Find(context.TODO(), bson.D{})
+		if err != nil {
+			panic(err)
+		}
+
+		var results []User
+		if err = cursor.All(c.Context(), &results); err != nil {
+			panic(err)
+		}
+
+		return c.JSON(results)
 	})
 
 	app.Post("/users/:id", func(c *fiber.Ctx) error {

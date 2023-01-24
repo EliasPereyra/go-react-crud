@@ -1,0 +1,14 @@
+section {
+  background: linear-gradient(45deg, 0% red, 100% green);
+}
+
+ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1em;
+  justify-content: center;
+}
+
+li {
+  list-style: none;
+}

@@ -5,6 +5,14 @@ form {
   flex-direction: column;
   gap: 0.7em;
   justify-content: center;
-  align-items: center;
   background-color: rgb(87, 206, 123);
+  text-align: left;
+}
+
+input {
+  background-color: #eee;
+  padding: 0.7em;
+  border: none;
+  border-radius: 4px;
+  color: #333;
 }

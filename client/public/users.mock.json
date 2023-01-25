@@ -1,0 +1,22 @@
+[
+  {
+    "name": "pepe",
+    "lastname": "mujica",
+    "age": 60
+  },
+  {
+    "name": "larzo",
+    "lastname": "moncilla",
+    "age": 36
+  },
+  {
+    "name": "marjico",
+    "lastname": "menderaza",
+    "age": 40
+  },
+  {
+    "name": "barso",
+    "lastname": "repondez",
+    "age": 29
+  }
+]

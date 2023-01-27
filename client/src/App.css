@@ -1,6 +1,6 @@
 .App {
   display: flex;
-  gap: 8em;
-  justify-content: space-between;
+  align-items: center;
   height: 100vh;
+  background: #d9e0db;
 }

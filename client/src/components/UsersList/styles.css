@@ -1,11 +1,7 @@
-section {
-  background: linear-gradient(45deg, 0% red, 100% green);
-}
-
 ul {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1em;
+  grid-template-columns: repeat(3, 15em);
+  gap: 0.5em;
   justify-content: center;
 }
 

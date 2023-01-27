@@ -7,6 +7,7 @@ form {
   justify-content: center;
   background-color: rgb(87, 206, 123);
   text-align: left;
+  height: 20em;
 }
 
 input {

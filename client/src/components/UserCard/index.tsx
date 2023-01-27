@@ -12,8 +12,8 @@ function UserCard({ user }: { user: User }) {
       <figcaption>
         <img className="user-icon" src={logo} alt={user.name} />
         <div className="icons">
-          <img className="edit-btn" src={edit} alt={"edit"} />
-          <img className="edit-btn" src={deleteIcon} alt={"delete"} />
+          <img className="btn edit-btn" src={edit} alt={"edit"} />
+          <img className="btn delete-btn" src={deleteIcon} alt={"delete"} />
         </div>
       </figcaption>
       <footer>

@@ -1,6 +1,7 @@
 .App {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 100vh;
   background: #d9e0db;
 }

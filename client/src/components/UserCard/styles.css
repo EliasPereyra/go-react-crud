@@ -1,5 +1,5 @@
 figure {
-  border: 1.2px solid #333;
+  border: 1.2px solid #cfcfcf;
   border-radius: 6px;
   padding: 1em;
   background-color: #eee;
@@ -22,8 +22,8 @@ figcaption {
 
 .icons {
   display: flex;
+  flex-direction: column;
   gap: 1em;
-  position: relative;
 }
 
 .btn {
@@ -35,10 +35,6 @@ figcaption {
   border: 1px solid brown;
   border-radius: 5px;
   color: brown;
-}
-
-.edit-btn {
-  position: absolute;
 }
 
 h3 {

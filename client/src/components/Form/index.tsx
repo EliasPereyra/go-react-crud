@@ -21,7 +21,7 @@ function Form() {
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const res = await fetch("/users/:id", {
+    const res = await fetch("http://localhost:4000/users/:id", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

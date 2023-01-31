@@ -8,6 +8,9 @@ form {
   background-color: rgb(87, 206, 123);
   text-align: left;
   height: 20em;
+  position: fixed;
+  top: 2em;
+  right: 5em;
 }
 
 input {

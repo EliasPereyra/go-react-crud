@@ -10,6 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -39,6 +40,7 @@ func main() {
 	
 
 	type User struct {
+		_id				primitive.ObjectID `bson:"_id"`
 		Name			string		`json:"name" form:"name"`
 		Lastname	string		`json:"lastName" form:"lastName"`
 		Age				int 			`json:"age" form:"age"`
@@ -48,7 +50,11 @@ func main() {
 	
 	app.Use(cors.New())
 
-	app.Static("/", "./client/dist")
+	app.Get("/", func(c *fiber.Ctx) error {
+		message := "Welcome to the server. Later you'll be redirected to the UI."
+		
+		return c.JSON(message)
+		})
 
 	app.Get("/users", func(c *fiber.Ctx) error {
 		cursor, err := coll.Find(context.TODO(), bson.D{})
@@ -60,7 +66,7 @@ func main() {
 		if err = cursor.All(c.Context(), &results); err != nil {
 			panic(err)
 		}
-
+		fmt.Print(results)
 		return c.JSON(results)
 	})
 

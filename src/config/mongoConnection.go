@@ -9,7 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func connectMongoDB() *mongo.Client {
+func ConnectMongoDB() *mongo.Client {
 	cfg := getConfig()
 
 	if cfg.MONGODB_URI == "" {
@@ -32,9 +32,9 @@ func connectMongoDB() *mongo.Client {
 	return client
 }
 
-var DB *mongo.Client = connectMongoDB()
+var DB *mongo.Client = ConnectMongoDB()
 
-func getCollections(client *mongo.Client) *mongo.Collection {
+func GetCollections(client *mongo.Client, collectionName string) *mongo.Collection {
 	collection := client.Database("go-mongo").Collection("users")
 
 	return collection

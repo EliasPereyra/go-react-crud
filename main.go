@@ -3,41 +3,18 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
-	"os"
 
+	"github.com/EliasPereyra/go-react-crud/src/config"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func main() {
 	app := fiber.New()
-
-	if err := godotenv.Load(); err != nil {
-		log.Println("No .env file found")
-	}
-
-	port := os.Getenv("PORT")
-
-	if port == "" {
-		port = "4000"
-	}
-	
-	uri := os.Getenv("MONGODB_URI")
-	if uri == "" {
-		log.Fatal("You must set your 'MONGODB_URI' environmental variable.")
-	}
-
-	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))
-	if err != nil {
-		panic(err)
-	}
-	
+	config.ConnectMongoDB()
 
 	type User struct {
 		_id				primitive.ObjectID `bson:"_id"`
@@ -46,7 +23,7 @@ func main() {
 		Age				int 			`json:"age" form:"age"`
 	} 
 
-	coll := client.Database("go-mongo").Collection("users")
+	var userCollection *mongo.Collection = config.GetCollections(config.DB, "users")
 	
 	app.Use(cors.New())
 
@@ -57,33 +34,62 @@ func main() {
 		})
 
 	app.Get("/users", func(c *fiber.Ctx) error {
-		cursor, err := coll.Find(context.TODO(), bson.D{})
-		if err != nil {
-			panic(err)
-		}
+	cursor, err := userCollection.Find(context.TODO(), bson.D{})
+	if err != nil {
+		panic(err)
+	}
 
-		var results []User
-		if err = cursor.All(c.Context(), &results); err != nil {
-			panic(err)
-		}
-		fmt.Print(results)
-		return c.JSON(results)
+	var results []User
+	 	if err = cursor.All(c.Context(), &results); err != nil {
+	 		panic(err)
+	 	}
+	 	fmt.Print(results)
+	 	return c.JSON(results)
 	})
 
-	app.Post("/users/:id", func(c *fiber.Ctx) error {
-		newUser := new(User)
-		c.BodyParser(newUser)
+	// app.Post("/users/:id", func(c *fiber.Ctx) error {
+	// 	newUser := new(User)
+	// 	c.BodyParser(newUser)
 
-		result, err := coll.InsertOne(context.TODO(), newUser)
-		if err != nil {
-			panic(err)
-		}
+	// 	result, err := coll.InsertOne(context.TODO(), newUser)
+	// 	if err != nil {
+	// 		panic(err)
+	// 	}
 
-		fmt.Println("user created")
-		return c.JSON(&fiber.Map{
-			"user": result,
-		})
-	})
+	// 	fmt.Println("user created")
+	// 	return c.JSON(&fiber.Map{
+	// 		"user": result,
+	// 	})
+	// })
 
-	app.Listen(":" + port)
+	// app.Put("/users/:id", func(c *fiber.Ctx) error {
+	// 	// take the id from the user
+	// 	userId := c.Body()
+	// 	id := coll.FindOne(context.TODO(), bson.D{{"_id", userId}})
+		
+	// 	filter := bson.D{{"_id", id}}
+
+	// 	update := bson.D{{"$set", filter}}
+		
+	// 	return c.JSON(update)
+	// })
+
+	// app.Delete("/users/:id", func(c *fiber.Ctx) error {
+	// 	// delete a user
+	// 	user := new(User)
+	// 	c.BodyParser(user)
+
+	// 	filter := bson.D{{"Name", user.Name}}
+
+	// 	result, err := coll.DeleteOne(context.TODO(), filter)
+
+	// 	if err != nil {
+	// 		panic(err)
+	// 	}
+
+	// 	fmt.Println("User deleted", result)
+	// 	return c.JSON("")
+	// })
+
+	app.Listen(":")
 }

@@ -15,5 +15,5 @@ First fullstack project using React.js with Go
 
 ## More info
 
-[React's Docs](https://beta.reactjs.org/)
-[Fiber Docs](https://gofiber.io/)
+- [React's Docs](https://beta.reactjs.org/)
+- [Fiber Docs](https://gofiber.io/)

@@ -9,7 +9,7 @@ function UsersList() {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:4000/users")
+    fetch("http://localhost:45453/users")
       .then(res => {
         if (!res.ok) {
           console.error("Hey, here the error", res.status);
@@ -20,7 +20,8 @@ function UsersList() {
         if (!data) throw Error("data not available");
 
         setUsers(data);
-      });
+      })
+      .catch(err => console.error("Error: ", err));
   }, []);
 
   return (

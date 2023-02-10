@@ -1,0 +1,10 @@
+nav {
+  background-color: #eee;
+  padding: 0.7em 1em;
+  display: flex;
+  justify-content: center;
+}
+
+h3 {
+  color: #333;
+}

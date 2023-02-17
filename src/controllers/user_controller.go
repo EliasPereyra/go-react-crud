@@ -37,20 +37,20 @@ func GetUser(c *fiber.Ctx) error {
 	return c.JSON(result)
 }
 
-// app.Post("/users/:id", func(c *fiber.Ctx) error {
-// 	newUser := new(User)
-// 	c.BodyParser(newUser)
+func createUser (c *fiber.Ctx) error {
+ 	newUser := new(models.User)
+ 	c.BodyParser(newUser)
 
-// 	result, err := coll.InsertOne(context.TODO(), newUser)
-// 	if err != nil {
-// 		panic(err)
-// 	}
+ 	result, err := userCollection.InsertOne(context.TODO(), newUser)
+ 	if err != nil {
+ 		panic(err)
+ 	}
 
-// 	fmt.Println("user created")
-// 	return c.JSON(&fiber.Map{
-// 		"user": result,
-// 	})
-// })
+ 	fmt.Println("user created")
+ 	return c.JSON(&fiber.Map{
+ 		"user": result,
+ 	})
+ }
 
 // app.Put("/users/:id", func(c *fiber.Ctx) error {
 // 	// take the id from the user

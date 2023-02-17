@@ -13,4 +13,6 @@ func UserRoute(app *fiber.App) {
 		})
 	
 	app.Get("/users", controllers.GetUsers)
+
+	app.Get("/users/:id", controllers.GetUser)
 }

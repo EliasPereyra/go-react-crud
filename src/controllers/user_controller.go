@@ -27,6 +27,16 @@ func GetUsers(c *fiber.Ctx) error{
 	return c.JSON(results)
 }
 
+func GetUser(c *fiber.Ctx) error {
+	userId := new(models.User)
+
+	c.ParamsParser(userId)
+
+	result := userCollection.FindOne(context.TODO(), bson.D{{"_id", userId}})
+
+	return c.JSON(result)
+}
+
 // app.Post("/users/:id", func(c *fiber.Ctx) error {
 // 	newUser := new(User)
 // 	c.BodyParser(newUser)

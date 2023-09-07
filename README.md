@@ -5,7 +5,7 @@ First fullstack project using React.js with Go
 ## Built with
 
 - React.js
-- Fiber (Go
+- Fiber
 
 ## More info
 

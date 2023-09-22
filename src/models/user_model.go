@@ -7,4 +7,5 @@ type User struct {
 	Name			string		`json:"name" form:"name"`
 	Lastname	string		`json:"lastName" form:"lastName"`
 	Age				int 			`json:"age" form:"age"`
+	Note_id		string		`json:"note_id" form:"note_id"`
 } 
